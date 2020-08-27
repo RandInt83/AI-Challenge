@@ -11,7 +11,7 @@ from itertools import count
 class Team:
     _ids = count(1)
     def __init__(self, *args, **kwargs):
-        if kwargs.has_key("id"):
+        if kwargs.__contains__("id"):
             self.id = kwargs["id"]
         else:
             self.id = next(self._ids)

@@ -39,7 +39,7 @@ class Game:
             t._set_botposition(self.M.map)
 
         self.debug = False        
-        if kwargs.has_key("debug"):
+        if kwargs.__contains__("debug"):
             if kwargs["debug"]==True:
                 self.debug = True
       
