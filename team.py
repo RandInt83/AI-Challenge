@@ -5,61 +5,54 @@ Created on Fri Jul  3 10:16:26 2020
 @author: chris
 """
 
-from bot import Bot
 from itertools import count
+
 
 class Team:
     _ids = count(1)
+
     def __init__(self, *args, **kwargs):
-        if kwargs.__contains__("id"):
-            self.id = kwargs["id"]
-        else:
-            self.id = next(self._ids)
+        self._id = kwargs["id"] if kwargs.__contains__("id") else next(self._ids)
         self.name = kwargs["name"]
         self.color = (255, 255, 255)
         self.bots = []
         self.start_positions = []
-        
-        for b in args:
-            self.bots.append(b) 
-            b._id = self.id
-            
-        
-        self._score = 0
-        self._kills = 0
-        self._moveWarning = 0
-        self._codeWarning = 0
-        self._timeoutWarning = 0
-        
-        #self.__set_botposition()
+
+        for bot in args:
+            self.bots.append(bot)
+            bot._id = self._id
+
+        self.score = 0
+        self.kills = 0
+        self.move_warns = 0
+        self.code_warns = 0
+        self.timeout_warns = 0
+
+        # self.__set_botposition()
         self.__set_color()
-    def _set_botposition(self, M):
-        
-        Map = M
-        
-        shift = 1
-        if self.id == 1: 
+
+    def get_id(self):
+        return self._id
+
+    def set_botposition(self, game_map):
+        if self._id == 1:
             shift = 1
             xstart = 1
         else:
             shift = -1
-            xstart = Map.shape[0]-2
-        
-        for bindex,b in enumerate(self.bots):
-            b._pos=(int(xstart+bindex*shift), int(Map.shape[1]/2.))
-            self.start_positions.append(b._pos)
-    def __set_color(self):
-        if self.id == 1:
-            self.color = (255, 0, 0)
-        if self.id == 2:
-            self.color = (0, 0, 255)
-        elif self.id == 3:
-            self.color = (50, 50, 50)
-            
-        
-        
-            
+            xstart = game_map.shape[0] - 2
 
+        for bindex, b in enumerate(self.bots):
+            b._pos = (int(xstart + bindex * shift), int(game_map.shape[1] / 2.))
+            self.start_positions.append(b._pos)
+
+    def __set_color(self):
+        if self._id == 1:
+            self.color = (255, 0, 0)
+        if self._id == 2:
+            self.color = (0, 0, 255)
+        elif self._id == 3:
+            self.color = (50, 50, 50)
 
 
 """
