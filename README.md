@@ -1,4 +1,4 @@
-# Multi Player Pacman AI-Challenge
+# Multiplayer Pacman AI-Challenge
 
 ## Konzept
 Es treten zwei Bots gegeneinander an. Es sind Beispiele ethalten und Eigene können als Klassen in bot.py geschrieben werden.
@@ -18,7 +18,7 @@ Lade nun das Repository als ZIP-Archiv herunter oder clone es mit git. <br> `git
 
 1. Instaliere Abhängigkeiten <br>
 Das Projekt ist abhängig von Numpy und Pygame.
-Instliere sie mit pip <br> `pip3 install numpy pygame`
+Instaliere sie mit pip <br> `pip3 install numpy pygame`
 
 2. Programm starten <br>
 Starte das Programm mit Python 3.x <br> `python3 main.py`
@@ -35,3 +35,6 @@ Taste | Funktion
 `3` | Bildwiederholrate auf 10 FPS
 `4` | Bildwiederholrate auf 20 FPS
 `5` | Bildwiederholrate auf 40 FPS
+
+## Beiragen
+In CONTRIBUTE.md befindet sich ein [Workflow](CONTRIBUTE.md) zur Mitarbeit an diesem Projekt.
