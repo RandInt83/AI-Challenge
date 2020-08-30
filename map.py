@@ -9,7 +9,7 @@ import random
 
 
 class Map:
-    def __init__(self, random_map=False):
+    def __init__(self, random_map=True):
         self.height = 0
         self.width = 0
         self.game_map = None
