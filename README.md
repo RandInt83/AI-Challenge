@@ -35,3 +35,6 @@ Taste | Funktion
 `3` | Bildwiederholrate auf 10 FPS
 `4` | Bildwiederholrate auf 20 FPS
 `5` | Bildwiederholrate auf 40 FPS
+
+## Beiragen
+In CONTRIBUTE.md befindet sich ein [Workflow](CONTRIBUTE.md) zur Mitarbeit an diesem Projekt.
