@@ -8,10 +8,8 @@ import traceback
 
 from bot import Bot, PelletChaser, SafePelletChaser
 from map import Map
-from engine import Engine
 from team import Team
 
-import pygame
 import random
 import copy
 import time
