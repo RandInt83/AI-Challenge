@@ -210,4 +210,4 @@ class Data_Generator:
             matches.append(G.run())
         return matches
 
-print(Data_Generator(10, 20, SafePelletChaser, PelletChaser).run())
+#print(Data_Generator(10, 20, SafePelletChaser, PelletChaser).run())
