@@ -9,7 +9,7 @@ import random
 
 
 class Map:
-    def __init__(self, random_map=False):
+    def __init__(self, random_map=True):
         self.height = 0
         self.width = 0
         self.game_map = None
@@ -83,7 +83,7 @@ class Map:
                 try:
                     a = self.game_map[xx, yy]
                     b = self.game_map[xx2, yy2]
-                except IndexError():
+                except IndexError:
                     self.walls.pop(rindex)
                     continue
 
