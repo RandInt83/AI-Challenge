@@ -6,12 +6,10 @@ Created on Fri Jul  3 08:11:18 2020
 """
 import traceback
 
-from bot import Bot, PelletChaser, SafePelletChaser
 from map import Map
-from engine import Engine
+from bot import Bot, PelletChaser, SafePelletChaser
 from team import Team
 
-import pygame
 import random
 import copy
 import time
@@ -172,11 +170,11 @@ class Game:
         maps, pellets, botposition_1, botposition_2 = self.game_map.map, [], [], []
 
         while self.running:
-            pellets.append(self.game_map.pellets)
-            botposition_1.append((self.teams[0].bots[0]._pos, self.teams[0].bots[1]._pos))
-            botposition_2.append((self.teams[1].bots[0]._pos, self.teams[1].bots[1]._pos))
-
+            pellets.append(copy.deepcopy(self.game_map.pellets))
+            botposition_1.append(copy.deepcopy(self.teams[1].bots[0].get_enemy()))
+            botposition_2.append(copy.deepcopy(self.teams[0].bots[0].get_enemy()))
             self.tick += 1
+            print('\r Tick '+str(self.tick), end='')
             for team in self.teams:
                 for bot in team.bots:
                     if bot.is_alive():
@@ -186,7 +184,8 @@ class Game:
                 for bot in bots_copy:
                     if not bot.is_alive(): team.bots.remove(bot)
 
-            if self.tick >= self.opt["Timelimit"] and self.opt["Timelimit"]: self.running = False
+            if self.tick >= self.opt["Timelimit"] and self.opt["Timelimit"]: 
+                self.running = False
 
         return (maps, pellets, botposition_1, botposition_2)
 
@@ -200,14 +199,23 @@ class Data_Generator:
 
     def run(self):
         matches = []
+        b1, b2 = self.bot1(), self.bot1()
+        b3, b4 = self.bot2(), self.bot2()
+        T1 = Team(b1, b2, name = "Bot 1")
+        T2 = Team(b3, b4, name = "Bot 2")
         for i in range(self.runterm):
-            b1, b2 = self.bot1(), self.bot2()
-            T1 = Team(b1, b1, name = "Bot 1")
-            T2 = Team(b2, b2, name = "Bot 2")
+            print('Match', i+1, 'of', self.runterm)
             M = Map(False)
             G = Game(M, T1, T2)
             G.opt["Timelimit"] = self.timelimit
             matches.append(G.run())
+            print()
+            del M, G
         return matches
 
-print(Data_Generator(10, 20, SafePelletChaser, PelletChaser).run())
+'''
+data = Data_Generator(10, 10, SafePelletChaser, PelletChaser).run()
+for i in data[0][2]:
+    print(i)
+    pass
+'''
