@@ -8,6 +8,7 @@ import numpy as np
 import random
 
 
+
 class Map:
     def __init__(self, random_map=True):
         self.height = 0
