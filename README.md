@@ -1,12 +1,13 @@
 # Multiplayer Pacman AI-Challenge
 
 ## Konzept
-Es treten zwei Bots gegeneinander an. Es sind Beispiele ethalten und Eigene können als Klassen in bot.py geschrieben werden.
 
-Das Spielfend ist wie ein Pacman Labyrinth aufgebaut und zwei Bots treten mit ein oder Zwei Figuren gegeneinander an.
-Die Bots ziehen ihre Figuren abwechsend ein Feld weiter. Es gibt die Möglichkeit nicht zu ziehen.
+Es treten zwei Bots gegeneinander an. Es sind Beispiele ethalten, eigene Bots können als Klassen in bot.py implementiert werden.
 
-Es gewinnt der jenige Bot, dessen Punktzahl am Ende des Spiels die Höchste ist.
+Das Spielfeld ist wie ein Pacman-Labyrinth aufgebaut. Die Bots treten mit ein oder zwei Figuren gegeneinander an.
+Es wird abwechselnd um jeweils ein Feld weitergezogen. Es gibt die Möglichkeit, nicht zu ziehen.
+
+Derjenige Bot gewinnt, dessen Punktzahl am Ende des Spiels die höchste ist.
 
 |Aufwendige Grafik                                           | Einfache Grafik                                           |
 :-----------------------------------------------------------:|:----------------------------------------------------------:
@@ -15,11 +16,11 @@ Es gewinnt der jenige Bot, dessen Punktzahl am Ende des Spiels die Höchste ist.
 ## Nutzung
 
 0. Repository herunterladen <br>
-Es gibt zwei Entwicklungszweige den offiziellen *master* und den gemeinschaftlich entwickeltelten *development* <br>
+Es gibt zwei Entwicklungszweige: den offiziellen *master* und den gemeinschaftlich entwickeltelten *development* <br>
 Lade nun das Repository als ZIP-Archiv herunter oder clone es mit git. <br> `git clone https://github.com/RandInt83/AI-Challenge.git`
 
 1. Instaliere Abhängigkeiten <br>
-Das Projekt ist abhängig von Numpy und Pygame.
+Zum Ausführen werden Numpy und Pygame benötigt.
 Instaliere sie mit pip <br> `pip3 install numpy pygame`
 
 2. Programm starten <br>
