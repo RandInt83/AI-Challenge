@@ -61,5 +61,5 @@ Block | Farbe | RGB-Code
 |-------------|--------------------------------------------------|--------------------------------------------------|--------------------------------------------------|--------------------------------------------------|
 | Karten      | ![Demo Karte M1](media/map_demos/demo_map_1.gif) | ![Demo Karte M2](media/map_demos/demo_map_2.gif) | ![Demo Karte M3](media/map_demos/demo_map_3.gif) | ![Demo Karte M4](media/map_demos/demo_map_4.gif) |
 
-## Beiragen
+## Beitragen
 In CONTRIBUTE.md befindet sich ein [Workflow](CONTRIBUTE.md) zur Mitarbeit an diesem Projekt.
