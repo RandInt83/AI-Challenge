@@ -25,7 +25,7 @@ class Map:
         self.teamYellowPosition = []
         
         if random_map == True:
-            self.map = self.load_from_file(random.randint(0,5))
+            self.map = self._load_from_file(random.randint(1,4))
         else:
             self.map = self._load_from_file(4)
             
@@ -40,9 +40,9 @@ class Map:
         White: Pellet
         Red, Green, Blue, Yellow: Team Starting Positions
         """
-        Map = np.array(Image.open("./Maps/M%s.png"%(map_number)))
+        Map = np.array(Image.open("maps/M%s.png"%(map_number)))
         self.game_map = np.zeros((Map.shape[0], Map.shape[1]))
-        print Map.shape
+        print(Map.shape)
         for x in range(0, Map.shape[0]):
             for y in range(0, Map.shape[1]):
                 if np.sum(Map[x, y, :]) < 256:
