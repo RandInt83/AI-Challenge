@@ -38,7 +38,7 @@ class Game:
         for team in self.teams:
             for bot in team.bots:
                 bot._game = self
-            team.set_botposition(self.game_map.map)
+            team.set_botposition(self.game_map)
 
         self.debug = False
         if kwargs.__contains__("debug"):
@@ -68,8 +68,8 @@ class Game:
     def __draw(self):
         self.Engine.draw_map(self.game_map.map)
         self.Engine.draw_pellets(self.game_map.pellets)
-        self.Engine.draw_bot(self.teams[0].bots, self.teams[0].color)
-        self.Engine.draw_bot(self.teams[1].bots, self.teams[1].color)
+        for team in self.teams:           
+            self.Engine.draw_bot(team.bots, team.color)
         self.Engine.draw_UI(self.teams)
 
         pygame.display.flip()

@@ -25,7 +25,7 @@ class MyBot(Bot):
 
 B1 = SafePelletChaser()
 B2 = SafePelletChaser()
-T1 = Team(B1, B2, name="My Team")
+T1 = Team(B1, B2, name="My Team 2")
 
 B3 = PelletChaser()
 B4 = PelletChaser()
