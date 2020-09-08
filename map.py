@@ -41,26 +41,27 @@ class Map:
         Red, Green, Blue, Yellow: Team Starting Positions
         """
         Map = np.array(Image.open("maps/M%s.png"%(map_number)))
+        Map = np.rot90(Map, 3)  # Workaround for Bug rotating the map
         self.game_map = np.zeros((Map.shape[0], Map.shape[1]))
-        print(Map.shape)
+        #print(Map.shape)
         for x in range(0, Map.shape[0]):
             for y in range(0, Map.shape[1]):
                 if np.sum(Map[x, y, :]) < 256:
                     self.game_map[x, y] = 1
-                if Map[x, y, 0] == 255 and Map[x, y, 1]  == 0 and Map[x, y, 2] == 0:
-                    print(x, y, Map[x, y, 0], "red")
+                if Map[x, y, 0] == 255 and Map[x, y, 1] == 0 and Map[x, y, 2] == 0:
+                    #print(x, y, Map[x, y, 0], "red")
                     self.teamRedPosition.append((x, y))
-                if Map[x, y, 0] == 0 and Map[x, y, 1]  == 0 and Map[x, y, 2] == 255:
-                    print(x, y, Map[x, y, 0], "blue")
+                if Map[x, y, 0] == 0 and Map[x, y, 1] == 0 and Map[x, y, 2] == 255:
+                    #print(x, y, Map[x, y, 0], "blue")
                     self.teamBluePosition.append((x, y))
-                if Map[x, y, 0] == 0 and Map[x, y, 1]  == 255 and Map[x, y, 2] == 0:
-                    print(x, y, Map[x, y, 0], "green")
+                if Map[x, y, 0] == 0 and Map[x, y, 1] == 255 and Map[x, y, 2] == 0:
+                    #print(x, y, Map[x, y, 0], "green")
                     self.teamGreenPosition.append((x, y))
-                if Map[x, y, 0] == 255 and Map[x, y, 1]  == 255 and Map[x, y, 2] == 0:
-                    print(x, y, Map[x, y, 0], "yellow")
+                if Map[x, y, 0] == 255 and Map[x, y, 1] == 255 and Map[x, y, 2] == 0:
+                    #print(x, y, Map[x, y, 0], "yellow")
                     self.teamYellowPosition.append((x, y))
         return self.game_map
-        
+
     def _create_pellets(self):
         for xindex, x in enumerate(self.map):
             for yindex, y in enumerate(x):
