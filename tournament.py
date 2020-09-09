@@ -8,6 +8,7 @@ from bot import Bot, PelletChaser, SafePelletChaser
 from map import Map
 from team import Team
 from game import Game
+from funcs import get_name
 import random
 
 #Try available Audio engines: Currently only Windows and macOS are supported (sapi5, nsss, espeak)
@@ -49,6 +50,10 @@ class Tournament:
             "LowGraphic": False
         }
         
+        if SPEECH: 
+            self.engine = pyttsx.init()            
+            voices = self.engine.getProperty('voices')
+            self.engine.setProperty('voice', voices[1].id)        
         self.run()
         
     def _create_matchups(self):
@@ -121,22 +126,23 @@ class Tournament:
         intro = "Welcome to the first Louisenlunder Ai Challenge tournament. Our todays contestants are. "
         for t in self.teams: intro = intro+t.name +" . "
         
-        intro = intro+"Let the Games begin. UIUIUIUIUI"
+        intro = intro+"Let the Games begin."
         
-        engine = pyttsx.init()
-        engine.say(intro)
-        engine.runAndWait()
+        self.engine.say(intro)
+        self.engine.runAndWait()
         
     def _newRound_speech(self, mu):
         """
         TODO
         """
-        text = "The next matchup is. "+self.teams[mu[0]].name+" . versus . "+self.teams[mu[1]].name+" . "
+        text = "The next matchup is. "+self.teams[mu[0]].name+" . also known as . "+get_name()
+        
+        text = text + ". versus . "
+        text = text + self.teams[mu[1]].name+" . also known as . " + get_name() + " . "
         text = text + "May the better AI win. "
         
-        engine = pyttsx.init()
-        engine.say(text)
-        engine.runAndWait()
+        self.engine.say(text)
+        self.engine.runAndWait()
         
         
 
