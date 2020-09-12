@@ -62,7 +62,7 @@ class Team:
         if self._id == 1:
             self.color = (255, 0, 0)
         if self._id == 2:
-            self.color = (0, 0, 255)
+            self.color = (255, 0, 255)
         elif self._id == 3:
             self.color = (0, 255, 50)
         elif self._id == 4:

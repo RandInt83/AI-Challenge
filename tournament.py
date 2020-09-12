@@ -42,7 +42,6 @@ class Tournament:
         self.team_score = [0 for i in self.teams]
         self.match_ups = None
         self._create_matchups()
-        print(self.match_ups)
         
         # Definition of tourmanent rules
         self.opt = {

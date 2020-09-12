@@ -20,8 +20,12 @@ Es gibt zwei Entwicklungszweige: den offiziellen *master* und den gemeinschaftli
 Lade nun das Repository als ZIP-Archiv herunter oder clone es mit git. <br> `git clone https://github.com/RandInt83/AI-Challenge.git`
 
 1. Instaliere Abhängigkeiten <br>
-Zum Ausführen werden Numpy und Pygame benötigt.
-Instaliere sie mit pip <br> `pip3 install numpy pygame`
+Zum Ausführen werden Numpy, Pygame und Matplotlib benötigt.
+Instaliere sie mit pip <br> `pip3 install numpy pygame matplotlib`
+
+(Optional)
+Eine Text-To-Speech Engine kann ein durchgeführtes Turnier moderieren. Hierfür
+ist eine Installation des Pakets pyttsx notwendig <br> `pip3 install numpy pygame matplotlib`
 
 2. Programm starten <br>
 Starte das Programm mit Python 3.x <br> `python3 main.py`
@@ -32,6 +36,7 @@ Taste | Funktion
 `0` | Spiel starten
 `6` | Pausieren
 `r` | Spiel neustarten
+`q` | Spiel beenden
 `t` | Grafik von Einfach auf Aufwendig schalten
 `1` | Bildwiederholrate auf 1 FPS
 `2` | Bildwiederholrate auf 3 FPS
