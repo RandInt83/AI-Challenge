@@ -10,6 +10,9 @@ from team import Team
 from game import Game
 from funcs import get_name
 import random
+import pylab
+import matplotlib.animation as animation
+import numpy as np
 
 #Try available Audio engines: Currently only Windows and macOS are supported (sapi5, nsss, espeak)
 try: 
@@ -35,6 +38,8 @@ class Tournament:
         """
         
         self.teams = [arg for arg in args]
+        self.team_totalpoints = [0 for i in self.teams]
+        self.team_score = [0 for i in self.teams]
         self.match_ups = None
         self._create_matchups()
         print(self.match_ups)
@@ -98,6 +103,8 @@ class Tournament:
         B2 = SafePelletChaser()
         T1 = Team(B1, B2, name="AI Challenge Team 1")
         
+        self._init_result()
+        
         self.game = Game(TMap, T1, T1)
         
         if SPEECH == True:
@@ -111,13 +118,56 @@ class Tournament:
                 self.game.opt = self.opt
                 self.game.fps = 30
                 self.game.run()
+                self._update_result(mu)
                 
-    def _update_result(self):
-        pass
+    def _update_result(self, mu):
+        """
+        Updates the plot results
+        """
+        tindex1 = mu[0]
+        tindex2 = mu[1]
+        
+        self.team_totalpoints[tindex1] += self.teams[tindex1].score
+        self.team_totalpoints[tindex2] += self.teams[tindex2].score
+        
+        if self.teams[tindex1].score > self.teams[tindex2].score:
+            self.team_score[tindex1] +=1
+        elif self.teams[tindex1].score < self.teams[tindex2].score:
+            self.team_score[tindex2] +=1
+        
+        self.score_data[0].set_ydata([0] + self.team_score) 
+        self.point_data[0].set_ydata([0] + self.team_totalpoints)
+        
+        if max(self.team_score) != min(self.team_score):
+            self.ax1.set_ylim(0, max(self.team_score) * 1.1)
+        
+        if max(self.team_totalpoints)!=min(self.team_totalpoints):
+            self.ax2.set_ylim(0, max(self.team_totalpoints) * 1.1)
+        
+        pylab.draw()
     
-    def _show_result(self):
-        pass
-    
+    def _init_result(self):
+        """
+        Initializes plot for the score screen
+        """
+        self.fig = pylab.figure(figsize = (6,12))
+        self.ax1 = self.fig.add_subplot(311)
+        self.ax1.set_ylabel("Total Score")
+        self.ax1.set_title("Score & Points Overview")
+        self.ax2 = self.fig.add_subplot(312)
+        self.ax2.set_ylabel("Total Points")
+        
+        self.ax1.set_xlim(0, len(self.teams))
+        self.ax2.set_xlim(0, len(self.teams))
+        
+        team_names = [team.name for team in self.teams]
+        
+        self.ax1.set_xticklabels(["" for i in team_names], rotation="vertical")
+        self.ax2.set_xticklabels(team_names, rotation="vertical")
+        
+        self.score_data = self.ax1.plot([""] + team_names, [0] + self.team_score, color = "r", drawstyle = "steps", lw = 5)
+        self.point_data = self.ax2.plot([""] + team_names, [0] + self.team_totalpoints, drawstyle = "steps", lw = 5)
+        
     def _introduction_speech(self):
         """
         TODO
@@ -135,7 +185,14 @@ class Tournament:
         """
         TODO
         """
-        text = "The next matchup is. "+self.teams[mu[0]].name+" . also known as . "+get_name()
+        self.engine.setProperty('rate', random.randint(200, 400))
+        text = "The current score is: . "
+        for tindex, team in enumerate(self.teams):
+            text = text + team.name + " . Total Wins: " + str(self.team_score[tindex]) + " . total points: "+ str(self.team_totalpoints[tindex]) + " . "
+        
+        
+        
+        text = text + "The next matchup is. "+self.teams[mu[0]].name+" . also known as . "+get_name()
         
         text = text + ". versus . "
         text = text + self.teams[mu[1]].name+" . also known as . " + get_name() + " . "
