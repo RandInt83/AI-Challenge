@@ -23,7 +23,7 @@ class Game:
         
         Arguments:
             game_map (Map): Instance of the Map class
-            *args (Team): Instances of Bot class. Number of instances should be between 1 and 3
+            *args (Team): Instances of Team class. Number of instances should be between 1 and 3
             
         Keyword Arguments:
             debug (boolean): Set to True for Error Traceback and Error Messages
@@ -38,7 +38,7 @@ class Game:
         for team in self.teams:
             for bot in team.bots:
                 bot._game = self
-            team.set_botposition(self.game_map.map)
+            team.set_botposition(self.game_map)
 
         self.debug = False
         if kwargs.__contains__("debug"):
@@ -68,8 +68,8 @@ class Game:
     def __draw(self):
         self.Engine.draw_map(self.game_map.map)
         self.Engine.draw_pellets(self.game_map.pellets)
-        self.Engine.draw_bot(self.teams[0].bots, self.teams[0].color)
-        self.Engine.draw_bot(self.teams[1].bots, self.teams[1].color)
+        for team in self.teams:           
+            self.Engine.draw_bot(team.bots, team.color)
         self.Engine.draw_UI(self.teams)
 
         pygame.display.flip()
@@ -171,6 +171,7 @@ class Game:
             None
         """
         stop = True
+        exit_game = False
 
         # Init Bots
         for team in self.teams:
@@ -193,6 +194,7 @@ class Game:
                     if event.key == pygame.K_5: self.fps = 40
                     if event.key == pygame.K_6: self.fps = 0
                     if event.key == pygame.K_0: stop = not stop
+                    if event.key == pygame.K_q: exit_game = True
                     if event.key == pygame.K_t: self.opt["LowGraphic"] = not self.opt["LowGraphic"]
                     if event.key == pygame.K_r: self._reset_game()
 
@@ -210,3 +212,4 @@ class Game:
                         if not bot.is_alive(): team.bots.remove(bot)
 
                 if self.tick >= self.opt["Timelimit"] and self.opt["Timelimit"]: stop = True
+            if exit_game == True: return True

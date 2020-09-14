@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Jul  3 08:11:18 2020
-
-@author: chris
-"""
 import traceback
 
 from map import Map
