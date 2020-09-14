@@ -30,19 +30,25 @@ ist eine Installation des Pakets pyttsx notwendig <br> `pip3 install numpy pygam
 2. Programm starten <br>
 Starte das Programm mit Python 3.x <br> `python3 main.py`
 
+## Turniermodus
+Die Datei *tounament.py* startet ein Turnier.
+In es können belibig viele Teams, dessen Bots aus  `bot.py` geladen werden können, an einem Turnier teilnehmen.
+Das Turnier wird mit `python3 turnament.py` gestartet.
+Es spielt dann jedes Team gegen jedes andere Team auf zufälligen Karten.
+
 ## Steuerung
-Taste | Funktion
-:---:|:---:
+|Taste |Funktion |
+|---|---|
 `0` | Spiel starten
-`6` | Pausieren
 `r` | Spiel neustarten
-`q` | Spiel beenden
+`q` | Spiel beenden und im Turniermodus das nächste Match aufrufen.
 `t` | Grafik von Einfach auf Aufwendig schalten
 `1` | Bildwiederholrate auf 1 FPS
 `2` | Bildwiederholrate auf 3 FPS
 `3` | Bildwiederholrate auf 10 FPS
 `4` | Bildwiederholrate auf 20 FPS
 `5` | Bildwiederholrate auf 40 FPS
+`6` | Maximale Geschwindigkeit
 
 ## Karten erstellen
 Im Verzeichniss *maps* können eigene Karten erstellt werden.
@@ -53,7 +59,7 @@ Die PNG-Dateien müssen mit einer Nummer ab 1 benannt sein: `M<int>.png`, also z
 In `map.py` kann eingestellt werden welche Karten geladen werden sollen und ob vor dem Spiel die Karten zufällig gewählt werden sollen.
 
 Block | Farbe | RGB-Code
-:------------------:|:-------:|:----------------:
+|-------------------|-------- |-----------------|
 |Wand               | Schwarz | `0, 0, 0`       |
 |Pellet             | Weiß    | `255, 255, 255` |
 |Position Team Rot  | Rot     | `255, 0 ,0`     |
@@ -61,9 +67,9 @@ Block | Farbe | RGB-Code
 |Position Team Blau | Blau    | `0, 0, 255`     |
 |Position Team Grün | Grün    | `255, 255, 0`   |
 
-
-| PNG-Dateien | ![Karte M1.png](maps/M1.png)                     | ![Karte M2.png](maps/M2.png)                     | ![Karte M3.png](maps/M3.png)                     | ![Karte M4.png](maps/M4.png)                     |
+| Karte       | Karte 1 `M1.png`                                 | Karte 2 `M2.png`                                 | Karte 3 `M3.png`                                 | Karte 4 `M4.png`                                 |
 |-------------|--------------------------------------------------|--------------------------------------------------|--------------------------------------------------|--------------------------------------------------|
+| PNG-Dateien | ![Karte M1.png](maps/M1.png)                     | ![Karte M2.png](maps/M2.png)                     | ![Karte M3.png](maps/M3.png)                     | ![Karte M4.png](maps/M4.png)                     |
 | Karten      | ![Demo Karte M1](media/map_demos/demo_map_1.gif) | ![Demo Karte M2](media/map_demos/demo_map_2.gif) | ![Demo Karte M3](media/map_demos/demo_map_3.gif) | ![Demo Karte M4](media/map_demos/demo_map_4.gif) |
 
 ## Beitragen
