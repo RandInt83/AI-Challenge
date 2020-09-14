@@ -7,12 +7,14 @@ Created on Wed Sep  9 13:05:09 2020
 from bot import Bot, PelletChaser, SafePelletChaser
 from map import Map
 from team import Team
-from game import Game
+from game import Game as OG
 from funcs import get_name
 import random
 import pylab
 import matplotlib.animation as animation
 import numpy as np
+import pygame
+import copy
 
 #Try available Audio engines: Currently only Windows and macOS are supported (sapi5, nsss, espeak)
 try: 
@@ -20,6 +22,79 @@ try:
     SPEECH = True
 except:
     SPEECH = False
+
+opt = {"Respawn on Kill": True,
+       "Points for Kill": 10,
+       "Timeout in Seconds": 1,
+       "Deathmatch Mode": True,
+       "Timelimit": 25,
+       "Debug": False,
+       "LowGraphic": False
+       }
+
+class Game(OG):
+
+    def _reset_game(self):
+        game_map = Map()
+
+        for team in self.teams:
+            team.code_warns = 0
+            team.move_warns = 0
+            team.score = 0
+            team.kills = 0
+
+            for bot in team.bots:
+                bot.reset()
+
+        self.__init__(game_map, self.teams[0], self.teams[1])
+
+    def run(self):
+        stop = True
+        exit_game = False
+
+        # Init Bots
+        for team in self.teams:
+            for bot in team.bots:
+                try:
+                    bot.init()
+                except Exception:
+                    traceback.print_exc()
+                    team.code_warns += 1
+
+        while self.running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.running = False
+                    return False
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_1: self.fps = 1
+                    if event.key == pygame.K_2: self.fps = 3
+                    if event.key == pygame.K_3: self.fps = 10
+                    if event.key == pygame.K_4: self.fps = 20
+                    if event.key == pygame.K_5: self.fps = 40
+                    if event.key == pygame.K_6: self.fps = 0
+                    if event.key == pygame.K_0 and self.tick < self.opt["Timelimit"]: stop = not stop
+                    if event.key == pygame.K_q: exit_game = True
+                    if event.key == pygame.K_t: self.opt["LowGraphic"] = not self.opt["LowGraphic"]
+                    if event.key == pygame.K_r: 
+                        self._reset_game()
+                        self.opt = opt
+
+            self.__draw()
+            if not stop:
+                self.tick += 1
+                for team in self.teams:
+                    for bot in team.bots:
+                        if bot.is_alive():
+                            self._handle_movement(bot, team)
+                            self.__draw()
+
+                    bots_copy = copy.copy(team.bots)
+                    for bot in bots_copy:
+                        if not bot.is_alive(): team.bots.remove(bot)
+
+                if self.tick >= self.opt["Timelimit"] and self.opt["Timelimit"]: stop = True
+            if exit_game == True: return True
 
 class Tournament:
     def __init__(self, *args, **kwargs):
@@ -44,15 +119,7 @@ class Tournament:
         self._create_matchups()
         
         # Definition of tourmanent rules
-        self.opt = {
-            "Respawn on Kill": True,
-            "Points for Kill": 10,
-            "Timeout in Seconds": 1,
-            "Deathmatch Mode": True,
-            "Timelimit": 25,
-            "Debug": False,
-            "LowGraphic": False
-        }
+        self.opt = opt
         
         if SPEECH: 
             self.engine = pyttsx.init()            
@@ -71,19 +138,7 @@ class Tournament:
             for t2index in range(index, len(self.teams)):
                 self.match_ups.append((tindex, t2index))
         random.shuffle(self.match_ups)
-        
-    def start_game(self):
-        """
-        Sets up a game in the tournament setup
-        """
-        for team in self.game.teams:
-            team.code_warns = 0
-            team.move_warns = 0
-            team.score = 0
-            team.kills = 0
 
-            for bot in team.bots:
-                bot.reset()
     def _setup_teams(self, matchup):
         """
         Sets up the teams (id, starting position)
@@ -116,7 +171,11 @@ class Tournament:
                 self.game.__init__(M, self.teams[mu[0]], self.teams[mu[1]])
                 self.game.opt = self.opt
                 self.game.fps = 30
-                self.game.run()
+                if not self.game.run():
+                    exit()
+                for team in self.game.teams:
+                    for bot in team.bots:
+                        bot.reset()
                 self._update_result(mu)
                 
     def _update_result(self, mu):
