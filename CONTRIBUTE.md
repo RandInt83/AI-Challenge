@@ -35,10 +35,12 @@ Wenn keine Konflikte bestehen, die auftreten könnten wenn z.B. eine Zeile von m
 Mit einer treffenden Beschreibung kann jetzt die Anfrage eingereicht werden.
 
 7. Die Pullrequest wird nun in den Kommentaren diskutiert und wenn sie getestet wurde von jemandem in das Projekt gemerged. <br>
-Sollte noch an der Request etwas verändert werden sollen kann einfach ein neuer Commit in den Fork gepusht werden.
+ollte noch an der Request etwas verändert werden sollen kann einfach ein neuer Commit in den Fork gepusht werden.
+Beim mergen sollte *squasch and merge* verwendet werden um alle commits der Pullrequest zusammenzufassen und übersichtlich ein zu binden.
+![Squash and Merge](media/workflow/squash_and_merge.png)
 
 Alle Aktionen können bequem aus einer IDE wie Pycharm Professional getätigt werden und benötigen nicht zwagsweise eine Komandozeile.
 
 ---
 Relevanter XKCD: <br>
-![clone fork](https://imgs.xkcd.com/comics/git.png )
+![clone fork](https://imgs.xkcd.com/comics/git.png)
