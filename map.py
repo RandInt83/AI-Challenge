@@ -11,7 +11,7 @@ import random
 
 
 class Map:
-    def __init__(self, random_map=False):
+    def __init__(self, random_map=False, loadmap=2):
         self.height = 0
         self.width = 0
         self.game_map = None
@@ -27,7 +27,7 @@ class Map:
         if random_map == True:
             self.map = self._load_from_file(random.randint(1,4))
         else:
-            self.map = self._load_from_file(4)
+            self.map = self._load_from_file(loadmap)
             
         self._create_pellets()
 
