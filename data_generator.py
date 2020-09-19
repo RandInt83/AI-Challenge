@@ -65,6 +65,8 @@ class Game(OG):
                     team.code_warns += 1
 
         maps, pellets, botposition_1, botposition_2 = self.game_map.map, [], [], []
+        startposition_1 = copy.deepcopy(self.teams[1].bots[0].get_enemy_starting_location())
+        startposition_2 = copy.deepcopy(self.teams[0].bots[0].get_enemy_starting_location())
 
         while self.running:
             pellets.append(copy.deepcopy(self.game_map.pellets))
@@ -84,7 +86,7 @@ class Game(OG):
             if self.tick >= self.opt["Timelimit"] and self.opt["Timelimit"]: 
                 self.running = False
 
-        return (maps, pellets, botposition_1, botposition_2)
+        return (maps, pellets, botposition_1, botposition_2, startposition_1, startposition_2)
 
 class Data_Generator:
 
@@ -102,7 +104,7 @@ class Data_Generator:
         matches = []
         print('Start simulating matches...')
         for i in range(self.runterm):
-            print('\r Match', i+1, 'of', self.runterm, end='')
+            print('\r Simulating Match %d of %d' %(i+1, self.runterm), end='')
             self.G.opt["Timelimit"] = self.timelimit
             matches.append(self.G.run())
             self.G._reset_game()
