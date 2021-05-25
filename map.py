@@ -69,4 +69,4 @@ class Map:
                     self.pellets.append((xindex, yindex))
 
 
-M = Map()
+#M = Map()

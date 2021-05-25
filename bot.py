@@ -47,7 +47,7 @@ class Bot:
         teams = self._game.teams
         for t in teams:
             for b in t.bots:
-                if self == b:
+                if self._id == b._id:
                     return [team for team in self._game.teams if team != t][0]
 
     def set_last_pos(self):

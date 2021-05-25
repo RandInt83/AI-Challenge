@@ -9,12 +9,12 @@ import traceback
 from map import Map
 from engine import Engine
 from team import Team
+from fakes import FakeGame, init_Game, update_Game
 
 import pygame
 import random
 import copy
 import time
-
 
 class Game:
     def __init__(self, game_map, *args, **kwargs):
@@ -36,9 +36,14 @@ class Game:
 
         self.teams = [arg for arg in args]
         for team in self.teams:
-            for bot in team.bots:
-                bot._game = self
             team.set_botposition(self.game_map)
+        
+        fg = FakeGame()
+        init_Game(fg, self)
+        update_Game(fg, self)
+        for team in self.teams:
+            for bot in team.bots:
+                bot._game = fg
 
         self.debug = False
         if kwargs.__contains__("debug"):
@@ -203,6 +208,7 @@ class Game:
                 self.tick += 1
                 for team in self.teams:
                     for bot in team.bots:
+                        update_Game(bot._game, self)
                         if bot.is_alive():
                             self._handle_movement(bot, team)
                             self.__draw()
